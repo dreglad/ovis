@@ -13,8 +13,8 @@ buttons). Agent states carry the remaining saturated colors and none of them is 
 chat turns are neutral raised cards, so a long thread never turns into a wall of color. Dark is the
 default, light follows the same hierarchy, and comfortable or compact density changes scale without
 changing information architecture. A new browser starts on the Codex theme (dark and light), which
-draws this hierarchy in Codex's neutral surfaces and blue accent; amber, charcoal, Catppuccin and
-herdr's built-in themes are picked in Settings → Appearance → Dark theme and Light theme. Amber
+draws this hierarchy in Codex's neutral surfaces and blue accent; amber, charcoal, Catppuccin,
+Halcyon and herdr's built-in themes are picked in Settings → Appearance → Dark theme and Light theme. Amber
 stays the base every theme block overrides and the look a browser keeps when it saved a theme
 while amber was the default; the saved theme, not amber, is the page's first frame (see Rules). Settings are saved on a user's first
 change, so a browser that never changed one moves to Codex with everyone new.
@@ -202,6 +202,15 @@ all palettes) and dark Catppuccin, whose elevated surface is darker than its can
   surfaces and text, with Crust as the hover, the darkest surface Subtext1 stays AA on. Latte's
   accents are under 4.5:1 on these surfaces, so each keeps its hue and is darkened until it passes
   AA. It keeps amber's rounded corners.
+- **Halcyon** is dark only and follows [bchiang7/halcyon-vscode](https://github.com/bchiang7/halcyon-vscode),
+  with [bchiang7/halcyon-hyper](https://github.com/bchiang7/halcyon-hyper) for the terminal. Content
+  `#1d2433` (the editor), chrome and elevated surfaces `#171c28` (the workbench, as VS Code draws its
+  sidebar and widgets), fields on `#1d2433`, a `#2f3b54` hovered row and selection, text `#d7dce2` /
+  `#a2aabc`, and Halcyon's `#ffcc66` accent on buttons and badges. The terminal takes Hyper's
+  `#a2aabc` foreground, `#ffcc66` cursor and `#2f3b54` selection; code follows the VS Code theme's
+  scopes. Only the agents' red moves, in lightness, so a blocked badge stays AA on a hovered row
+  (`#ef6b73` to `#ffa7ac`). Like Dracula, Nord and Vesper it keeps its one row on either settings
+  side, with no sibling pre-fill.
 
 - **Black** uses Tokyo Night colors on a pure-black canvas, panel, inputs and terminal.
   Raised surfaces are near-black.

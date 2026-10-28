@@ -909,7 +909,7 @@ try {
         // Settings is opened again below: its close's step back lands first, or, landing over a second late,
         // it is taken for a Back and closes the Settings opened meanwhile (settingsHistory's landing deadline)
         await page.waitForFunction(() => (history.state as Record<string, unknown> | null)?.["ovis:settings"] === undefined);
-        for (const id of ["dracula", "nord", "vesper", "black"]) {
+        for (const id of ["dracula", "nord", "vesper", "black", "halcyon"]) {
           await openSettings(page);
           await openSettingsPage(page, "Appearance");
           await page.getByRole("group", { name: "Theme", exact: true }).getByRole("button", { name: "Dark", exact: true }).click();
@@ -946,7 +946,7 @@ try {
         await page.reload();
         await page.locator(".conn-live").waitFor({ state: "attached" });
         await page.waitForFunction(() => document.documentElement.dataset.palette === "codex" && document.documentElement.dataset.theme === "light" && getComputedStyle(document.documentElement).colorScheme === "light");
-        if (process.env.UI_EVIDENCE_DIR) writeFileSync(join(process.env.UI_EVIDENCE_DIR, "any-side.txt"), "PASS Light mode with lightTheme=dracula draws data-theme=dark, data-palette=dracula, color-scheme=dark.\nPASS injected lightTheme=not-a-theme reloads codex light, the default.\nPASS Dracula, Nord and Vesper do not pre-fill a sibling.\n");
+        if (process.env.UI_EVIDENCE_DIR) writeFileSync(join(process.env.UI_EVIDENCE_DIR, "any-side.txt"), "PASS Light mode with lightTheme=dracula draws data-theme=dark, data-palette=dracula, color-scheme=dark.\nPASS injected lightTheme=not-a-theme reloads codex light, the default.\nPASS Dracula, Nord, Vesper and Halcyon do not pre-fill a sibling.\n");
         console.log("PASS dark-only themes on either side, distinct borders, no siblings, and unknown-id reload");
         // the reload was made with Settings open: its step out of Settings' entry lands before Settings opens again
         await historyHolds(page, "the reload with Settings open", () => (history.state as Record<string, unknown> | null)?.["ovis:settings"] === undefined);

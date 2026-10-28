@@ -61,6 +61,7 @@ licenses follow. Tokyo Night Day uses folke's Apache-2.0 port, not the original 
 | dracula | [dracula/dracula-theme](https://github.com/dracula/dracula-theme/blob/master/README.md) | MIT |
 | nord | [nordtheme/nord](https://github.com/nordtheme/nord/blob/develop/src/nord.css) | MIT |
 | vesper | [raunofreiberg/vesper](https://github.com/raunofreiberg/vesper/blob/main/themes/Vesper-dark-color-theme.json) | MIT |
+| halcyon | [bchiang7/halcyon-vscode](https://github.com/bchiang7/halcyon-vscode/blob/main/themes/halcyon-color-theme.json), [bchiang7/halcyon-hyper](https://github.com/bchiang7/halcyon-hyper/blob/master/index.js) | MIT |
 
 ## Legend List
 
