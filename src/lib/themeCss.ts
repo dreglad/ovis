@@ -3,7 +3,7 @@
  * the CSS text. Runtime code never imports this module.
  */
 
-import { LIGHT_ANSI_ROLES, ROLES } from "./themeRoles.ts";
+import { ANSI_ROLES, ROLES } from "./themeRoles.ts";
 import type { Mode } from "./themes.ts";
 
 /**
@@ -33,7 +33,7 @@ export type ThemeValue =
 
 const ALIAS = /^var\((--[\w-]+)\)$/;
 const RGBA = /^rgba\((\d+), (\d+), (\d+), (0(?:\.\d+)?|1(?:\.0+)?)\)$/;
-const COLOR_ROLES = { ...ROLES, ...Object.fromEntries(Object.values(LIGHT_ANSI_ROLES).map((role) => [role, "color"])) };
+const COLOR_ROLES = { ...ROLES, ...Object.fromEntries(Object.values(ANSI_ROLES).map((role) => [role, "color"])) };
 
 function isColor(value: string): boolean {
   if (/^#[0-9a-f]{6}$/.test(value) || value === "transparent") return true;

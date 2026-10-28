@@ -6,7 +6,7 @@
  */
 export { HERDR_SOURCE } from "../src/lib/themes.ts";
 import type { Mode } from "../src/lib/themes.ts";
-import { LIGHT_ANSI_ROLES } from "../src/lib/themeRoles.ts";
+import { ANSI_ROLES } from "../src/lib/themeRoles.ts";
 
 export const TOKENS = [
   "accent", "panel_bg", "sidebar_bg", "active_row_bg", "selection_bg", "surface0",
@@ -140,7 +140,7 @@ export const RAW = {
 
 export type HerdrThemeId = keyof typeof RAW;
 
-export type AnsiRole = (typeof LIGHT_ANSI_ROLES)[keyof typeof LIGHT_ANSI_ROLES];
+export type AnsiRole = (typeof ANSI_ROLES)[keyof typeof ANSI_ROLES];
 
 /** Raw light-terminal mapping; normal and bright hues share herdr's named colour. */
 export function mapTerminalAnsi(id: HerdrThemeId, raw: RawPalette = RAW[id]): Record<AnsiRole, string> {

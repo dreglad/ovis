@@ -48,8 +48,11 @@ export const ROLES = {
   "shadow-card": "shadow",
 } as const;
 
-/** Light-only terminal roles, keyed by xterm's ITheme names. Dark rows use xterm defaults. */
-export const LIGHT_ANSI_ROLES = {
+/**
+ * Terminal ANSI roles, keyed by xterm's ITheme names. Every light row declares all sixteen; a dark row
+ * declares all sixteen or none, and one with none draws xterm's defaults.
+ */
+export const ANSI_ROLES = {
   black: "term-black",
   red: "term-red",
   green: "term-green",
