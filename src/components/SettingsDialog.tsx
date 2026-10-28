@@ -282,6 +282,7 @@ const THEME_NAMES: Record<ThemeId, string> = {
   dracula: "Dracula",
   nord: "Nord",
   vesper: "Vesper",
+  halcyon: "Halcyon",
 };
 
 /**
