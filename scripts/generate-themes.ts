@@ -25,7 +25,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { parseThemeBlocks, resolveEntry } from "../src/lib/themeCss.ts";
-import { LIGHT_ANSI_ROLES, ROLES } from "../src/lib/themeRoles.ts";
+import { ANSI_ROLES, ROLES } from "../src/lib/themeRoles.ts";
 
 export const SOURCE = "src/styles.css";
 export const OUTPUTS = {
@@ -122,16 +122,21 @@ export function renderModule(css: string, blocks = parseThemeBlocks(css), amber 
       if (value === undefined) throw new Error(`${SOURCE}: ${block.id}/${block.mode} has no --${role}`);
       return JSON.stringify(value);
     };
-    const ansi = Object.entries(LIGHT_ANSI_ROLES).map(([name, role]) => {
+    // :root is the base every dark row resolves through, so ANSI colours there would reach every dark theme
+    const ansiDeclared = block.mode === "light"
+      || (block.id !== "amber" && Object.values(ANSI_ROLES).some((role) => block.declared[`--${role}`] !== undefined));
+    const ansi = Object.entries(ANSI_ROLES).map(([name, role]) => {
       const declared = block.declared[`--${role}`];
-      if (block.mode === "dark") {
+      if (!ansiDeclared) {
         if (declared !== undefined) throw new Error(`${SOURCE}: ${block.id}/dark must not declare --${role}`);
         return "";
       }
-      if (declared === undefined) throw new Error(`${SOURCE}: ${block.id}/light must declare --${role}`);
+      if (declared === undefined) {
+        throw new Error(block.mode === "light" ? `${SOURCE}: ${block.id}/light must declare --${role}` : `${SOURCE}: ${block.id}/dark declares ANSI colours, so it must declare --${role} too`);
+      }
       return `, ${name}: ${color(role)}`;
     }).join("");
-    const roles = [...Object.keys(ROLES), ...Object.values(LIGHT_ANSI_ROLES)].filter((role) => block.declared[`--${role}`] !== undefined);
+    const roles = [...Object.keys(ROLES), ...Object.values(ANSI_ROLES)].filter((role) => block.declared[`--${role}`] !== undefined);
     return [
       "  {",
       `    id: ${JSON.stringify(block.id)},`,
@@ -175,17 +180,19 @@ export function renderDesign(css: string, design: string, amber = resolveAmber(p
     `| ${label} | \`${token}\` | \`${tokenColor(amber, token, "dark", "declared")}\` | \`${tokenColor(amber, token, "light", "declared")}\` |`);
   const table = ["| Role | Token | Dark | Light |", "|------|-------|------|-------|", ...rows].join("\n");
   const blocks = parseThemeBlocks(css);
-  const light = Object.values(blocks).filter((block) => block.mode === "light");
+  const ansiRows = Object.values(blocks).filter((block) => block.mode === "light" || block.declared["--term-black"] !== undefined);
   const ansi = [
-    "### Light terminal ANSI colours",
+    "### Terminal ANSI colours",
     "",
-    "Each colour is at least 4.5:1 on its row's `--term-bg`. Dark rows use xterm's defaults.",
-    "Normal and bright slots may share a colour to preserve the palette while keeping both readable.",
+    "Every light row declares these; a dark row declares all sixteen or none, and one with none uses",
+    "xterm's defaults. Each colour is at least 4.5:1 on its row's `--term-bg`, except a dark row's",
+    "`black`, which a dark terminal draws as a background. Normal and bright slots may share a colour",
+    "to preserve the palette while keeping both readable.",
     "",
-    `| ANSI | xterm key | ${light.map(({ id }) => id).join(" | ")} |`,
-    `|------|-----------|${light.map(() => "-------|").join("")}`,
-    ...Object.entries(LIGHT_ANSI_ROLES).map(([name, role], index) =>
-      `| ${index} | \`${name}\` | ${light.map(({ id, mode }) => `\`${resolveEntry(blocks, id, mode).resolved[`--${role}`]}\``).join(" | ")} |`),
+    `| ANSI | xterm key | ${ansiRows.map(({ id, mode }) => mode === "dark" ? `${id} (dark)` : id).join(" | ")} |`,
+    `|------|-----------|${ansiRows.map(() => "-------|").join("")}`,
+    ...Object.entries(ANSI_ROLES).map(([name, role], index) =>
+      `| ${index} | \`${name}\` | ${ansiRows.map(({ id, mode }) => `\`${resolveEntry(blocks, id, mode).resolved[`--${role}`]}\``).join(" | ")} |`),
   ].join("\n");
   return `${design.slice(0, begin + DESIGN_BEGIN.length)}\n${table}\n\n${ansi}\n${design.slice(end)}`;
 }
