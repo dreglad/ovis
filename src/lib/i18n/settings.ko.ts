@@ -46,6 +46,7 @@ export const SETTINGS_KO: Record<string, string> = {
   "Dracula": "Dracula",
   "Nord": "Nord",
   "Vesper": "Vesper",
+  "Halcyon": "Halcyon",
   "Density": "밀도",
   "Comfortable": "여유",
   "Compact": "촘촘",

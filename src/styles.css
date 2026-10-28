@@ -1428,6 +1428,58 @@
   --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
+/* Halcyon (bchiang7/halcyon-vscode, and halcyon-hyper for the terminal). The content (chat canvas,
+   terminal) is the editor's #1d2433; the chrome and elevated surfaces are the workbench's #171c28, as
+   VS Code draws its sidebar and widgets, and fields sit on the editor's #1d2433. A hovered row and
+   the selection are the list hover #2f3b54, and Halcyon's #ffcc66 accent fills buttons and badges.
+   Code follows the VS Code theme's scopes. Only the agents' red moves, in lightness, so a blocked
+   badge reads on a hovered row (#ef6b73 -> #ffa7ac). */
+[data-theme="dark"][data-palette="halcyon"] {
+  --bg: #1d2433;
+  --bg-panel: #171c28;
+  --bg-elevated: #171c28;
+  --bg-hover: #2f3b54;
+  --bg-input: #1d2433;
+  --border: #2f3b54;
+  --border-strong: #6779a3;
+  --text: #d7dce2;
+  --text-dim: #a2aabc;
+  --text-strong: #d7dce2;
+  --accent: #ffcc66;
+  --accent-tint: rgba(255, 204, 102, 0.13);
+  --primary: #ffcc66;
+  --primary-hover: #ffd580;
+  --primary-text: #171c28;
+  --primary-tint: rgba(255, 204, 102, 0.16);
+  --status-idle: #8695b7;
+  --status-working: #5ccfe6;
+  --status-blocked: #ffa7ac;
+  --status-done: #bae67e;
+  --status-working-tint: rgba(92, 207, 230, 0.14);
+  --status-blocked-tint: rgba(255, 167, 172, 0.14);
+  --status-done-tint: rgba(186, 230, 126, 0.14);
+  --danger-tint: rgba(255, 167, 172, 0.12);
+  --notice: #ffae57;
+  --danger-text: #ffa7ac;
+  --scrim: rgba(29, 36, 51, 0.5);
+  --term-bg: #1d2433;
+  --term-fg: #a2aabc;
+  --term-cursor: #ffcc66;
+  --term-selection: #2f3b54;
+  --line-number: #a2aabc;
+  --syntax-function: #ffd580;
+  --syntax-keyword: #ffae57;
+  --syntax-string: #bae67e;
+  --syntax-number: #c3a6ff;
+  --syntax-type: #5ccfe6;
+  --syntax-variable: #a2aabc;
+  --syntax-meta: #ffcc66;
+  --bubble-border: var(--border);
+  --shadow-drawer: 0 0 40px rgba(0, 0, 0, 0.6);
+  --shadow-pop: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--border);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
 [data-chat-width="narrow"] {
   --chat-w: var(--content-w);
 }
