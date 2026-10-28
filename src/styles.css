@@ -1432,8 +1432,10 @@
    terminal) is the editor's #1d2433; the chrome and elevated surfaces are the workbench's #171c28, as
    VS Code draws its sidebar and widgets, and fields sit on the editor's #1d2433. A hovered row and
    the selection are the list hover #2f3b54, and Halcyon's #ffcc66 accent fills buttons and badges.
+   The terminal's sixteen ANSI colours are Hyper's, whose bright slots repeat the normal ones; its
+   grey #6779a3 is under 4.5:1 as bright black, so that slot takes the palette's lighter #8695b7.
    Code follows the VS Code theme's scopes. Only the agents' red moves, in lightness, so a blocked
-   badge reads on a hovered row (#ef6b73 -> #ffa7ac). */
+   badge reads on a hovered row (#ef6b73 -> #ffa7ac); the terminal keeps it. */
 [data-theme="dark"][data-palette="halcyon"] {
   --bg: #1d2433;
   --bg-panel: #171c28;
@@ -1466,6 +1468,22 @@
   --term-fg: #a2aabc;
   --term-cursor: #ffcc66;
   --term-selection: #2f3b54;
+  --term-black: #6779a3;
+  --term-red: #ef6b73;
+  --term-green: #bae67e;
+  --term-yellow: #ffd580;
+  --term-blue: #5ccfe6;
+  --term-magenta: #c3a6ff;
+  --term-cyan: #5ccfe6;
+  --term-white: #d7dce2;
+  --term-bright-black: #8695b7;
+  --term-bright-red: #ef6b73;
+  --term-bright-green: #bae67e;
+  --term-bright-yellow: #ffd580;
+  --term-bright-blue: #5ccfe6;
+  --term-bright-magenta: #c3a6ff;
+  --term-bright-cyan: #5ccfe6;
+  --term-bright-white: #d7dce2;
   --line-number: #a2aabc;
   --syntax-function: #ffd580;
   --syntax-keyword: #ffae57;

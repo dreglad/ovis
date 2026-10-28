@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseThemeBlocks, parseThemeValue, resolveEntry, ThemeValueError } from "./themeCss.ts";
-import { LIGHT_ANSI_ROLES } from "./themeRoles.ts";
+import { ANSI_ROLES } from "./themeRoles.ts";
 import baseline from "./themes.legacy-baseline.json";
 import { DEFAULT_THEME, ROLES, SHADOW_GEOMETRY, SUPPORTED_ENTRIES, THEME_IDS, themeColor as tableThemeColor } from "./themes.ts";
 import { DEFAULT_ID } from "../../scripts/generate-themes.ts";
@@ -863,7 +863,8 @@ describe("palette", () => {
         const { resolved } = resolveEntry(css, id, mode);
         const expected = {
           background: resolved["--term-bg"], foreground: resolved["--term-fg"], cursor: resolved["--term-cursor"], selectionBackground: resolved["--term-selection"],
-          ...(mode === "light" ? Object.fromEntries(Object.entries(LIGHT_ANSI_ROLES).map(([name, role]) => [name, resolved[`--${role}`]])) : {}),
+          ...(mode === "light" || parseThemeBlocks(css)[key]?.declared["--term-black"] !== undefined
+            ? Object.fromEntries(Object.entries(ANSI_ROLES).map(([name, role]) => [name, resolved[`--${role}`]])) : {}),
         };
         let terminal: unknown;
         try {
@@ -889,34 +890,37 @@ describe("palette", () => {
     expect({ theme_color: manifest.theme_color, background_color: manifest.background_color }).toEqual({ theme_color: resolved["--bg-panel"], background_color: resolved["--bg"] });
   });
 
-  it("declares all sixteen readable ANSI colours only in light rows and passes them to xterm", () => {
+  it("declares all sixteen readable ANSI colours in every light row, and in a dark row all or none, and passes them to xterm", () => {
     const failures: string[] = [];
     const blocks = parseThemeBlocks(css);
     const hex = (value: string): Rgb => {
       if (!/^#[0-9a-f]{6}$/.test(value)) throw new ThemeValueError("ANSI", "color", value, "not an opaque color");
       return [parseInt(value.slice(1, 3), 16), parseInt(value.slice(3, 5), 16), parseInt(value.slice(5, 7), 16)];
     };
-    expect(Object.keys(LIGHT_ANSI_ROLES)).toHaveLength(16);
+    expect(Object.keys(ANSI_ROLES)).toHaveLength(16);
     for (const { id, mode, key } of entries) {
       checked(failures, () => {
         const own = blocks[key]?.declared ?? {};
         const { resolved } = resolveEntry(blocks, id, mode);
         const terminal = terminalTheme(mode, id);
-        for (const [name, role] of Object.entries(LIGHT_ANSI_ROLES)) {
+        const declares = mode === "light" || Object.values(ANSI_ROLES).some((role) => own[`--${role}`] !== undefined);
+        for (const [name, role] of Object.entries(ANSI_ROLES)) {
           const token = `--${role}`;
-          if (mode === "dark") {
-            if (own[token] !== undefined || Object.hasOwn(terminal, name)) failures.push(`${key} ${role}: dark ANSI override`);
+          if (!declares) {
+            if (Object.hasOwn(terminal, name)) failures.push(`${key} ${role}: passed to xterm without a declaration`);
             continue;
           }
           if (own[token] === undefined) failures.push(`${key} ${role}: missing own declaration`);
           const value = resolved[token] ?? "(missing)";
           const contrast = ratio(hex(value), hex(resolved["--term-bg"] ?? "(missing)"));
-          if (contrast < 4.5) failures.push(`${key} ${role}: ${contrast}:1 on term-bg`);
+          // a dark terminal draws black as a background, as xterm's own default #000000 is
+          if (contrast < 4.5 && !(mode === "dark" && name === "black")) failures.push(`${key} ${role}: ${contrast}:1 on term-bg`);
           if (Reflect.get(terminal, name) !== value) failures.push(`${key} ${role}: not passed to xterm`);
         }
       });
     }
     expect(failures).toEqual([]);
+    expect(SUPPORTED_ENTRIES.filter((entry) => entry.mode === "dark" && "black" in entry.terminal).map((entry) => entry.id)).toEqual(["halcyon"]);
   });
 
   it("keeps text, agent states and code readable (WCAG AA 4.5:1) on every surface of every entry", () => {
