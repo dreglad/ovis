@@ -1,7 +1,7 @@
 /** The authored theme role contract. Theme values live only in src/styles.css. */
 import { SUPPORTED_ENTRIES, THEME_IDS } from "./themes.generated.ts";
 import type { ThemeId } from "./themes.generated.ts";
-import type { LIGHT_ANSI_ROLES } from "./themeRoles.ts";
+import type { ANSI_ROLES } from "./themeRoles.ts";
 
 export { SUPPORTED_ENTRIES, THEME_IDS };
 export { ROLES, SHADOW_GEOMETRY } from "./themeRoles.ts";
@@ -12,7 +12,7 @@ export type Mode = "dark" | "light";
 export type ThemeEntry = (typeof SUPPORTED_ENTRIES)[number];
 
 export type TerminalColors = { readonly background: string; readonly foreground: string; readonly cursor: string; readonly selectionBackground: string }
-  & Readonly<Partial<Record<keyof typeof LIGHT_ANSI_ROLES, string>>>;
+  & Readonly<Partial<Record<keyof typeof ANSI_ROLES, string>>>;
 
 export function isThemeId(value: unknown): value is ThemeId {
   return typeof value === "string" && (THEME_IDS as readonly string[]).includes(value);

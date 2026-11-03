@@ -41,9 +41,16 @@ describe("generate-themes", () => {
     expect(renderAll(ROOT)).toEqual(renderAll(ROOT));
   });
 
-  it("rejects missing light ANSI declarations and any dark ANSI declarations", () => {
+  it("rejects missing light ANSI declarations, ANSI declarations in :root and a dark row's partial set", () => {
     expect(() => renderModule(css.replace("--term-black: #2a251f;", ""))).toThrow("amber/light must declare --term-black");
     expect(() => renderModule(css.replace(":root {", ":root { --term-black: #123456;"))).toThrow("amber/dark must not declare --term-black");
+    expect(() => renderModule(css.replace("--term-bright-white: #d7dce2;", ""))).toThrow("halcyon/dark declares ANSI colours, so it must declare --term-bright-white too");
+  });
+
+  it("passes a dark row's full ANSI set to xterm and leaves a dark row without one to xterm's defaults", () => {
+    const module = renderModule(css);
+    expect(module).toContain('selectionBackground: "#2f3b54", black: "#6779a3", red: "#ef6b73"');
+    expect(module).toContain('terminal: { background: "#101010", foreground: "#ffffff", cursor: "#ffffff", selectionBackground: "#232323" },');
   });
 
   it("rejects a duplicated, missing or out-of-order DESIGN.md marker, naming it", () => {

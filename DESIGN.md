@@ -13,8 +13,8 @@ buttons). Agent states carry the remaining saturated colors and none of them is 
 chat turns are neutral raised cards, so a long thread never turns into a wall of color. Dark is the
 default, light follows the same hierarchy, and comfortable or compact density changes scale without
 changing information architecture. A new browser starts on the Codex theme (dark and light), which
-draws this hierarchy in Codex's neutral surfaces and blue accent; amber, charcoal, Catppuccin and
-herdr's built-in themes are picked in Settings → Appearance → Dark theme and Light theme. Amber
+draws this hierarchy in Codex's neutral surfaces and blue accent; amber, charcoal, Catppuccin,
+Halcyon and herdr's built-in themes are picked in Settings → Appearance → Dark theme and Light theme. Amber
 stays the base every theme block overrides and the look a browser keeps when it saved a theme
 while amber was the default; the saved theme, not amber, is the page's first frame (see Rules). Settings are saved on a user's first
 change, so a browser that never changed one moves to Codex with everyone new.
@@ -118,29 +118,31 @@ Only tokens overridden by `[data-theme="light"]` have a light value. Both column
 | Alert/ring | `--droplet-ring` | `rgba(255, 255, 255, 0.1)` | `rgba(255, 255, 255, 0.1)` |
 | Alert/shadow | `--droplet-shadow` | `rgba(0, 0, 0, 0.35)` | `rgba(0, 0, 0, 0.35)` |
 
-### Light terminal ANSI colours
+### Terminal ANSI colours
 
-Each colour is at least 4.5:1 on its row's `--term-bg`. Dark rows use xterm's defaults.
-Normal and bright slots may share a colour to preserve the palette while keeping both readable.
+Every light row declares these; a dark row declares all sixteen or none, and one with none uses
+xterm's defaults. Each colour is at least 4.5:1 on its row's `--term-bg`, except a dark row's
+`black`, which a dark terminal draws as a background. Normal and bright slots may share a colour
+to preserve the palette while keeping both readable.
 
-| ANSI | xterm key | amber | charcoal | codex | catppuccin | catppuccin-latte | tokyo-night-day | gruvbox-light | one-light | solarized-light | kanagawa-lotus | rose-pine-dawn |
-|------|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
-| 0 | `black` | `#2a251f` | `#242424` | `#1a1c1f` | `#4c4f69` | `#4c4f69` | `#3760bf` | `#3c3836` | `#383a42` | `#556a72` | `#545464` | `#464261` |
-| 1 | `red` | `#a82323` | `#b3261e` | `#b3261e` | `#ac0c2f` | `#ac0c2f` | `#90001b` | `#9d0006` | `#a51110` | `#b60006` | `#95002b` | `#873a52` |
-| 2 | `green` | `#2f6317` | `#22743a` | `#22743a` | `#28651b` | `#28651b` | `#405b1f` | `#676200` | `#287c2a` | `#5d6e00` | `#4a6228` | `#286983` |
-| 3 | `yellow` | `#8c5000` | `#8a5300` | `#8a5300` | `#8a5710` | `#8a5710` | `#6c4d1f` | `#8e5100` | `#995f00` | `#8a5f00` | `#625b2a` | `#9e5600` |
-| 4 | `blue` | `#155a72` | `#0b6e8a` | `#0b6e8a` | `#1750bf` | `#1750bf` | `#004db6` | `#076678` | `#2f64dd` | `#006baf` | `#4d699b` | `#286983` |
-| 5 | `magenta` | `#8a3f7a` | `#6f42c1` | `#6f42c1` | `#712fc6` | `#712fc6` | `#7847bd` | `#8f3f71` | `#a626a4` | `#c12073` | `#624c83` | `#755f8d` |
-| 6 | `cyan` | `#0f6b6f` | `#0f6f74` | `#0f6f74` | `#0e6b70` | `#0e6b70` | `#005f4a` | `#316b48` | `#0072a9` | `#00746d` | `#216276` | `#33717c` |
-| 7 | `white` | `#685e52` | `#5f5b56` | `#5f5b56` | `#5c5f77` | `#5c5f77` | `#41508a` | `#504945` | `#686b77` | `#5a6a6c` | `#43436c` | `#605b78` |
-| 8 | `brightBlack` | `#5a5045` | `#4e4b47` | `#4e4b47` | `#64677d` | `#64677d` | `#41508a` | `#504945` | `#686b77` | `#586e75` | `#43436c` | `#605b78` |
-| 9 | `brightRed` | `#c42b2b` | `#c92d24` | `#c92d24` | `#c41545` | `#c41545` | `#90001b` | `#9d0006` | `#a51110` | `#b60006` | `#95002b` | `#873a52` |
-| 10 | `brightGreen` | `#3b741c` | `#277d3f` | `#277d3f` | `#2f7620` | `#2f7620` | `#405b1f` | `#676200` | `#287c2a` | `#5d6e00` | `#4a6228` | `#286983` |
-| 11 | `brightYellow` | `#9d5a00` | `#9f6100` | `#9f6100` | `#905c13` | `#905c13` | `#6c4d1f` | `#8e5100` | `#995f00` | `#8a5f00` | `#625b2a` | `#9e5600` |
-| 12 | `brightBlue` | `#1d6f8c` | `#1a7391` | `#1a7391` | `#0b59f4` | `#0b59f4` | `#004db6` | `#076678` | `#2f64dd` | `#006baf` | `#4d699b` | `#286983` |
-| 13 | `brightMagenta` | `#a24b90` | `#7f52d1` | `#7f52d1` | `#8839ef` | `#8839ef` | `#7847bd` | `#8f3f71` | `#a626a4` | `#c12073` | `#624c83` | `#755f8d` |
-| 14 | `brightCyan` | `#117676` | `#13767e` | `#13767e` | `#13737a` | `#13737a` | `#005f4a` | `#316b48` | `#0072a9` | `#00746d` | `#216276` | `#33717c` |
-| 15 | `brightWhite` | `#16120d` | `#111111` | `#0d0d0d` | `#4c4f69` | `#4c4f69` | `#3760bf` | `#3c3836` | `#383a42` | `#556a72` | `#545464` | `#464261` |
+| ANSI | xterm key | amber | charcoal | codex | catppuccin | catppuccin-latte | tokyo-night-day | gruvbox-light | one-light | solarized-light | kanagawa-lotus | rose-pine-dawn | halcyon (dark) |
+|------|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+| 0 | `black` | `#2a251f` | `#242424` | `#1a1c1f` | `#4c4f69` | `#4c4f69` | `#3760bf` | `#3c3836` | `#383a42` | `#556a72` | `#545464` | `#464261` | `#6779a3` |
+| 1 | `red` | `#a82323` | `#b3261e` | `#b3261e` | `#ac0c2f` | `#ac0c2f` | `#90001b` | `#9d0006` | `#a51110` | `#b60006` | `#95002b` | `#873a52` | `#ef6b73` |
+| 2 | `green` | `#2f6317` | `#22743a` | `#22743a` | `#28651b` | `#28651b` | `#405b1f` | `#676200` | `#287c2a` | `#5d6e00` | `#4a6228` | `#286983` | `#bae67e` |
+| 3 | `yellow` | `#8c5000` | `#8a5300` | `#8a5300` | `#8a5710` | `#8a5710` | `#6c4d1f` | `#8e5100` | `#995f00` | `#8a5f00` | `#625b2a` | `#9e5600` | `#ffd580` |
+| 4 | `blue` | `#155a72` | `#0b6e8a` | `#0b6e8a` | `#1750bf` | `#1750bf` | `#004db6` | `#076678` | `#2f64dd` | `#006baf` | `#4d699b` | `#286983` | `#5ccfe6` |
+| 5 | `magenta` | `#8a3f7a` | `#6f42c1` | `#6f42c1` | `#712fc6` | `#712fc6` | `#7847bd` | `#8f3f71` | `#a626a4` | `#c12073` | `#624c83` | `#755f8d` | `#c3a6ff` |
+| 6 | `cyan` | `#0f6b6f` | `#0f6f74` | `#0f6f74` | `#0e6b70` | `#0e6b70` | `#005f4a` | `#316b48` | `#0072a9` | `#00746d` | `#216276` | `#33717c` | `#5ccfe6` |
+| 7 | `white` | `#685e52` | `#5f5b56` | `#5f5b56` | `#5c5f77` | `#5c5f77` | `#41508a` | `#504945` | `#686b77` | `#5a6a6c` | `#43436c` | `#605b78` | `#d7dce2` |
+| 8 | `brightBlack` | `#5a5045` | `#4e4b47` | `#4e4b47` | `#64677d` | `#64677d` | `#41508a` | `#504945` | `#686b77` | `#586e75` | `#43436c` | `#605b78` | `#8695b7` |
+| 9 | `brightRed` | `#c42b2b` | `#c92d24` | `#c92d24` | `#c41545` | `#c41545` | `#90001b` | `#9d0006` | `#a51110` | `#b60006` | `#95002b` | `#873a52` | `#ef6b73` |
+| 10 | `brightGreen` | `#3b741c` | `#277d3f` | `#277d3f` | `#2f7620` | `#2f7620` | `#405b1f` | `#676200` | `#287c2a` | `#5d6e00` | `#4a6228` | `#286983` | `#bae67e` |
+| 11 | `brightYellow` | `#9d5a00` | `#9f6100` | `#9f6100` | `#905c13` | `#905c13` | `#6c4d1f` | `#8e5100` | `#995f00` | `#8a5f00` | `#625b2a` | `#9e5600` | `#ffd580` |
+| 12 | `brightBlue` | `#1d6f8c` | `#1a7391` | `#1a7391` | `#0b59f4` | `#0b59f4` | `#004db6` | `#076678` | `#2f64dd` | `#006baf` | `#4d699b` | `#286983` | `#5ccfe6` |
+| 13 | `brightMagenta` | `#a24b90` | `#7f52d1` | `#7f52d1` | `#8839ef` | `#8839ef` | `#7847bd` | `#8f3f71` | `#a626a4` | `#c12073` | `#624c83` | `#755f8d` | `#c3a6ff` |
+| 14 | `brightCyan` | `#117676` | `#13767e` | `#13767e` | `#13737a` | `#13737a` | `#005f4a` | `#316b48` | `#0072a9` | `#00746d` | `#216276` | `#33717c` | `#5ccfe6` |
+| 15 | `brightWhite` | `#16120d` | `#111111` | `#0d0d0d` | `#4c4f69` | `#4c4f69` | `#3760bf` | `#3c3836` | `#383a42` | `#556a72` | `#545464` | `#464261` | `#d7dce2` |
 <!-- END GENERATED THEMES -->
 
 The glass tokens are expressions over the palette above, not colors of their own:
@@ -174,7 +176,7 @@ edited: `:root` is dark amber, `[data-theme="light"]` is light amber and
 (the supported entries with their roles, xterm colors, panel color and page surface `bg`), the amber table above
 between its `GENERATED THEMES` markers, the `theme-color` tag in `index.html` and the manifest's
 `theme_color` and `background_color`. Never edit those copies by hand; `--check` fails when one
-is stale. The tables list amber's UI roles and every light row's terminal ANSI colours; read
+is stale. The tables list amber's UI roles and the terminal ANSI colours of every row that declares them; read
 another theme's UI values in its block. A herdr theme
 starts from `bun scripts/herdr-theme-proposal.ts`. Every role whose value differs from the raw
 herdr mapping (`mapTheme`), including repairs the proposal tool already made, is listed in
@@ -202,6 +204,17 @@ all palettes) and dark Catppuccin, whose elevated surface is darker than its can
   surfaces and text, with Crust as the hover, the darkest surface Subtext1 stays AA on. Latte's
   accents are under 4.5:1 on these surfaces, so each keeps its hue and is darkened until it passes
   AA. It keeps amber's rounded corners.
+- **Halcyon** is dark only and follows [bchiang7/halcyon-vscode](https://github.com/bchiang7/halcyon-vscode),
+  with [bchiang7/halcyon-hyper](https://github.com/bchiang7/halcyon-hyper) for the terminal. Content
+  `#1d2433` (the editor), chrome and elevated surfaces `#171c28` (the workbench, as VS Code draws its
+  sidebar and widgets), fields on `#1d2433`, a `#2f3b54` hovered row and selection, text `#d7dce2` /
+  `#a2aabc`, and Halcyon's `#ffcc66` accent on buttons and badges. The terminal takes Hyper's
+  `#a2aabc` foreground, `#ffcc66` cursor, `#2f3b54` selection and sixteen ANSI colours, the one
+  dark row that declares them; Hyper's grey `#6779a3` is under 4.5:1 as bright black, so that slot
+  takes the palette's `#8695b7`. Code follows the VS Code theme's scopes. Only the agents' red
+  moves, in lightness, so a blocked badge stays AA on a hovered row (`#ef6b73` to `#ffa7ac`); the
+  terminal keeps `#ef6b73`. Like Dracula, Nord and Vesper it keeps its one row on either settings
+  side, with no sibling pre-fill.
 
 - **Black** uses Tokyo Night colors on a pure-black canvas, panel, inputs and terminal.
   Raised surfaces are near-black.
