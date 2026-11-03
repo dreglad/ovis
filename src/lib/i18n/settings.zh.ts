@@ -47,6 +47,7 @@ export const SETTINGS_ZH: Record<string, string> = {
   "Dracula": "Dracula",
   "Nord": "Nord",
   "Vesper": "Vesper",
+  "Halcyon": "Halcyon",
   "Density": "密度",
   "Comfortable": "宽松",
   "Compact": "紧凑",

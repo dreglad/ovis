@@ -47,6 +47,7 @@ export const SETTINGS_JA: Record<string, string> = {
   "Dracula": "Dracula",
   "Nord": "Nord",
   "Vesper": "Vesper",
+  "Halcyon": "Halcyon",
   "Density": "表示密度",
   "Comfortable": "ゆったり",
   "Compact": "コンパクト",

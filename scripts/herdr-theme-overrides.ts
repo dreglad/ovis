@@ -1,7 +1,7 @@
 /** Explicit reviewed deviations from mapTheme. Add alongside the CSS edit, never generate. */
 import { normalizeThemeValue, parseThemeBlocks } from "../src/lib/themeCss.ts";
 import { ROLES, SUPPORTED_ENTRIES } from "../src/lib/themes.ts";
-import { LIGHT_ANSI_ROLES } from "../src/lib/themeRoles.ts";
+import { ANSI_ROLES } from "../src/lib/themeRoles.ts";
 import type { Mode } from "../src/lib/themes.ts";
 import baseline from "../src/lib/themes.legacy-baseline.json";
 import { isHerdrThemeId, KIND, mapTerminalAnsi } from "./herdr-themes.ts";
@@ -10,7 +10,7 @@ import { mapTheme } from "./herdr-theme-proposal.ts";
 import type { Role } from "./herdr-theme-proposal.ts";
 
 /** The app's own themes besides the legacy three: no herdr palette, so no mapping to check. */
-export const APP_THEME_IDS: ReadonlySet<string> = new Set(["codex", "black"]);
+export const APP_THEME_IDS: ReadonlySet<string> = new Set(["codex", "black", "halcyon"]);
 
 export type ThemeOverride = {
   readonly theme: HerdrThemeId;
@@ -329,7 +329,7 @@ export function provenanceFailures(
       continue;
     }
     const mapped = { ...mapTheme(id), ...mapTerminalAnsi(id) };
-    const roles = [...(legacyAnsi ? [] : Object.keys(ROLES)), ...(mode === "light" ? Object.values(LIGHT_ANSI_ROLES) : [])];
+    const roles = [...(legacyAnsi ? [] : Object.keys(ROLES)), ...(mode === "light" ? Object.values(ANSI_ROLES) : [])];
     for (const role of roles) {
       const expected = mapped[role as Role | AnsiRole], actual = blocks[key]?.declared[`--${role}`];
       const override = overrides.find((item) => item.theme === id && item.mode === mode && item.role === role);
@@ -344,7 +344,7 @@ export function provenanceFailures(
     const actual = blocks[key]?.declared[`--${item.role}`];
     if (seen.has(label)) failures.push(`${label}: duplicate override`);
     seen.add(label);
-    const ansi = Object.values(LIGHT_ANSI_ROLES).some((role) => role === item.role);
+    const ansi = Object.values(ANSI_ROLES).some((role) => role === item.role);
     if (!entries.some((entry) => entry.id === item.theme && entry.mode === item.mode)
       || (legacy.has(key) && !(key === "catppuccin-latte/light" && ansi)) || (ansi && item.mode !== "light")
       || actual === undefined || actual !== normalizeThemeValue(item.value)) failures.push(`${label}: stale override`);
